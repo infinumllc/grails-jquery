@@ -16,21 +16,23 @@
 
 package org.codehaus.groovy.grails.plugins.jquery
 
-import org.codehaus.groovy.grails.commons.ApplicationHolder
+import org.codehaus.groovy.grails.commons.GrailsApplication
+import org.codehaus.groovy.grails.plugins.support.aware.GrailsApplicationAware
 
 /**
  * TODO: write javadoc
  *
  * @author Sergey Nebolsin (nebolsin@prophotos.ru)
  */
-class JQueryConfig {
+class JQueryConfig implements GrailsApplicationAware {
     def defaultPlugins
     def plugins = [:]
 
     static SHIPPED_VERSION = '1.9.1'
+    GrailsApplication grailsApplication
 
     def init() {
-        ApplicationHolder.application.metadata.findAll{ key, value ->
+        grailsApplication.metadata.findAll{ key, value ->
             key.startsWith('jquery.plugins')
         }.each {key, value ->
             // wtf?
@@ -38,6 +40,6 @@ class JQueryConfig {
             plugins."$pluginName" = value.split(",") as List
         }
 
-        defaultPlugins = ApplicationHolder.application.config.jquery?.defaultPlugins
+        defaultPlugins = grailsApplication.config.jquery?.defaultPlugins
     }
 }
