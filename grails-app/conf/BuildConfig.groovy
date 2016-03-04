@@ -34,7 +34,7 @@ grails.project.dependency.resolution = {
         mavenLocal()
         mavenRepo(id:"avisoapp", url:"https://build.avisoapp.com/artifactory/libs-release")
     }
-    
+
     plugins {
         build(':release:3.1.1', ':rest-client-builder:2.1.1') {
             export = false
